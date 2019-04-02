@@ -1,0 +1,29 @@
+package com.imooc.icake.global;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class LoginFilter implements Filter {
+    public void destroy() {
+    }
+
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        HttpServletRequest request=(HttpServletRequest)req;
+        HttpServletResponse response=(HttpServletResponse)resp;
+        Object object=request.getSession().getAttribute("ACCOUNT");
+        if (object==null){
+            request.getRequestDispatcher("/WEB-INF/pages/admin/login.jsp").forward(request,response);
+        }else{
+            chain.doFilter(request,response);
+        }
+
+    }
+
+    public void init(FilterConfig config) throws ServletException {
+
+    }
+
+}
